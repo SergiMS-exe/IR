@@ -25,11 +25,11 @@ public class Proceso {
 
 	
 	private int YEAR = 2021;
-	private String Filename = "..\\files\\file.csv";
+	private String Filename = "C:\\Users\\casti\\Desktop\\InterfazHolanda\\src\\files\\file.csv";
 
 	public void rInicial() {
 		ConsultasBBDD cuentas = new ConsultasBBDD();
-		ResultSet rs = cuentas.obtenerClientes();
+		ResultSet rs = cuentas.reporteInicial();
 		List<List<String>> rows = toList(rs);
 		imprimirCSV(rows);
 
@@ -38,17 +38,46 @@ public class Proceso {
 	private List<List<String>> toList(ResultSet rs) {
 		// TODO Auto-generated method stub
 		List<List<String>> l = new ArrayList<List<String>>();
-
+		ConsultasBBDD cuentas = new ConsultasBBDD();
+		ResultSet dir=null;
 		try {
 			while (rs.next()) {
-				int id = rs.getInt(1);
-				String numeroIdentificacion = rs.getString(2);
-				String estado = rs.getString(3);
-				String fechaInicio = rs.getDate(4).toString();
-				int direccion = rs.getInt(5);
+				String numeroCuenta = rs.getString(1);
+				String apellido = rs.getString(2);
+				String nombre = rs.getString(3);
+				int direccion = rs.getInt(4);
+				String numeroIdentificacion = rs.getString(5);
+				String fechaNacimiento = rs.getDate(6).toString();
 
-				l.add(Arrays.asList(String.valueOf(id), numeroIdentificacion, estado, fechaInicio,
-						String.valueOf(direccion)));
+				dir=cuentas.obtenerDireccion(direccion);
+				String calle="";
+				String numero ="";
+				String calleNumero = ""; 
+				String ciudad = "";
+				int codigoPostal = 0;
+				String pais="";
+				while(dir.next()) {
+					calle=dir.getString(3);
+					numero =String.valueOf(dir.getInt(4));
+					calleNumero = calle + " " + numero; 
+					ciudad = dir.getString(6);
+					codigoPostal = dir.getInt(8);
+					pais=dir.getString(9);
+				}
+				
+				
+				
+				l.add(Arrays.asList(
+						numeroCuenta, 
+						apellido,
+						nombre,
+						calleNumero,
+						ciudad,
+						String.valueOf(codigoPostal),
+						pais,
+						String.valueOf(numeroIdentificacion),
+						fechaNacimiento
+						));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -60,41 +89,12 @@ public class Proceso {
 
 	public void rSemanal() {
 		ConsultasBBDD cuentas = new ConsultasBBDD();
-		ResultSet rs = cuentas.obtenerClientes();
+		ResultSet rs = cuentas.reporteSemanal();
 		List<List<String>> rows = toList(rs);
-		rows = filtrarSemanal(rows);
 		imprimirCSV(rows);
 
 	}
 
-	private List<List<String>> filtrarSemanal(List<List<String>> rows) {
-		// TODO Auto-generated method stub
-		List<List<String>> l = new ArrayList<List<String>>();;
-		for (List<String> rowData : rows) {
-		   String estado = rowData.get(2);
-		   String fecha = rowData.get(3);
-		   fecha = getAño(fecha);
-		   int dif =YEAR- Integer.valueOf(fecha);
-		   System.out.println(estado);
-		   System.out.println(dif + " " + fecha + " " + YEAR);
-		   if (estado.equals("Activo")&& dif<=5) {
-			   l.add(rowData);
-		   }
-		   
-		}
-		return l;
-	}
-
-
-
-	private String getAño(String fecha) {
-		// TODO Auto-generated method stub
-		StringBuilder sb = new StringBuilder();
-		for(int i=0;i<4;i++) {
-			sb.append(fecha.charAt(i));
-		}
-		return sb.toString();
-	}
 
 	private void imprimirCSV(List<List<String>> rows) {
 		boolean existe = new File(Filename).exists();
@@ -107,19 +107,27 @@ public class Proceso {
 		try {
 
 			FileWriter fw = new FileWriter(Filename);
-			fw.append("ID");
+			fw.append("IBAN");
 			fw.append(", ");
-			fw.append("Numero Identificacion");
+			fw.append("Last_Name");
 			fw.append(", ");
-			fw.append("Estado Cuenta");
+			fw.append("First_Name");
 			fw.append(", ");
-			fw.append("Fecha Inicio");
+			fw.append("Street");
 			fw.append(", ");
-			fw.append("Direccion");
+			fw.append("City");
+			fw.append(", ");
+			fw.append("Post_Code");
+			fw.append(", ");
+			fw.append("Country");
+			fw.append(", ");
+			fw.append("identification_Numbre");
+			fw.append(", ");
+			fw.append("Date_Of_Birth");
 			fw.append("\r\n");
 			
 			for (List<String> rowData : rows) {
-			    fw.append(String.join(",", rowData));
+			    fw.append(String.join(", ", rowData));
 			    fw.append("\r\n");
 			}
 
