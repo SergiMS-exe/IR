@@ -57,7 +57,8 @@ public class VentanaHolanda extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				frame.setVisible(false);
+				new VentanaHolandaFiltrarClientes().setVisible(true);
 			}
 		});
 		btnNewButton.setBounds(82, 307, 146, 21);

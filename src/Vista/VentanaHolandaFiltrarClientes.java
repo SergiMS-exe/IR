@@ -40,6 +40,8 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 
+	private static VentanaHolandaFiltrarClientes frame;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -47,7 +49,7 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaHolandaFiltrarClientes frame = new VentanaHolandaFiltrarClientes();
+					frame = new VentanaHolandaFiltrarClientes();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -76,6 +78,8 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				new VentanaHolanda().setVisible(true);
 			}
 		});
 		Top.add(btnNewButton, BorderLayout.WEST);
@@ -248,6 +252,11 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		contentPane.add(Bottom, BorderLayout.SOUTH);
 		
 		JButton btnNewButton_1 = new JButton("Filtrar Clientes");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		Bottom.add(btnNewButton_1);
 	}

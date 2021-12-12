@@ -77,6 +77,7 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 		JButton btnNewButton_1 = new JButton("< Retroceder\r\n");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
 				new VentanaHolanda().setVisible(true);
 			}
 		});
