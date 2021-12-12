@@ -1,6 +1,5 @@
 package Alemania;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,7 +22,6 @@ import bbdd.ConsultasBBDD;
 
 public class Proceso {
 
-	
 	private int YEAR = 2021;
 	private String Filename = "C:\\Users\\casti\\Desktop\\InterfazHolanda\\src\\files\\file.csv";
 
@@ -39,7 +37,8 @@ public class Proceso {
 		// TODO Auto-generated method stub
 		List<List<String>> l = new ArrayList<List<String>>();
 		ConsultasBBDD cuentas = new ConsultasBBDD();
-		ResultSet dir=null;
+		ResultSet dir = null;
+		ResultSet perRel = null;
 		try {
 			while (rs.next()) {
 				String numeroCuenta = rs.getString(1);
@@ -49,35 +48,34 @@ public class Proceso {
 				String numeroIdentificacion = rs.getString(5);
 				String fechaNacimiento = rs.getDate(6).toString();
 
-				dir=cuentas.obtenerDireccion(direccion);
-				String calle="";
-				String numero ="";
-				String calleNumero = ""; 
+				dir = cuentas.obtenerDireccion(direccion);
+				String calle = "";
+				String numero = "";
+				String calleNumero = "";
 				String ciudad = "";
 				int codigoPostal = 0;
-				String pais="";
-				while(dir.next()) {
-					calle=dir.getString(3);
-					numero =String.valueOf(dir.getInt(4));
-					calleNumero = calle + " " + numero; 
+				String pais = "";
+				while (dir.next()) {
+					calle = dir.getString(3);
+					numero = String.valueOf(dir.getInt(4));
+					calleNumero = calle + " " + numero;
 					ciudad = dir.getString(6);
 					codigoPostal = dir.getInt(8);
-					pais=dir.getString(9);
+					pais = dir.getString(9);
 				}
-				
-				
-				
-				l.add(Arrays.asList(
-						numeroCuenta, 
-						apellido,
-						nombre,
-						calleNumero,
-						ciudad,
-						String.valueOf(codigoPostal),
-						pais,
-						String.valueOf(numeroIdentificacion),
-						fechaNacimiento
-						));
+
+				l.add(Arrays.asList(numeroCuenta, apellido, nombre, calleNumero, ciudad, String.valueOf(codigoPostal),
+						pais, String.valueOf(numeroIdentificacion), fechaNacimiento));
+				perRel = cuentas.personasRelacionadas(rs.getInt(7));
+
+				while (perRel.next()) {
+					System.out.println("entro");
+					ResultSet p = cuentas.obtenerPersona(perRel.getInt(1));
+					l.add(Arrays.asList(numeroCuenta, perRel.getString(4), perRel.getString(2), calleNumero, ciudad,
+							String.valueOf(codigoPostal), pais, String.valueOf(numeroIdentificacion),
+							perRel.getDate(6).toString()));
+				}
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -95,7 +93,6 @@ public class Proceso {
 
 	}
 
-
 	private void imprimirCSV(List<List<String>> rows) {
 		boolean existe = new File(Filename).exists();
 
@@ -108,32 +105,32 @@ public class Proceso {
 
 			FileWriter fw = new FileWriter(Filename);
 			fw.append("IBAN");
-			fw.append(", ");
+			fw.append("; ");
 			fw.append("Last_Name");
-			fw.append(", ");
+			fw.append("; ");
 			fw.append("First_Name");
-			fw.append(", ");
+			fw.append("; ");
 			fw.append("Street");
-			fw.append(", ");
+			fw.append("; ");
 			fw.append("City");
-			fw.append(", ");
+			fw.append("; ");
 			fw.append("Post_Code");
-			fw.append(", ");
+			fw.append("; ");
 			fw.append("Country");
-			fw.append(", ");
+			fw.append("; ");
 			fw.append("identification_Numbre");
-			fw.append(", ");
+			fw.append("; ");
 			fw.append("Date_Of_Birth");
 			fw.append("\r\n");
-			
+
 			for (List<String> rowData : rows) {
-			    fw.append(String.join(", ", rowData));
-			    fw.append("\r\n");
+				fw.append(String.join("; ", rowData));
+				fw.append("\r\n");
 			}
 
 			fw.flush();
 			fw.close();
-		
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
