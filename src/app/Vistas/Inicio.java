@@ -15,12 +15,17 @@ import netherlands.Vistas.*;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.Font;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class Inicio extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JButton btnAlemania;
 	private JButton btnHolanda;
+	private JPanel panel;
 	
 
 	/**
@@ -50,18 +55,27 @@ public class Inicio extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panel.setBounds(241, 33, 220, 67);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
 		JLabel lblTituloInicio = new JLabel("Tipo de ER");
+		lblTituloInicio.setBounds(0, 10, 218, 46);
+		panel.add(lblTituloInicio);
+		lblTituloInicio.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		lblTituloInicio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTituloInicio.setBounds(247, 48, 208, 46);
-		contentPane.add(lblTituloInicio);
 		
 		btnAlemania = new JButton("Alemania");
-		btnAlemania.setBounds(123, 307, 85, 21);
+		btnAlemania.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnAlemania.setBounds(129, 217, 129, 52);
 		btnAlemania.addActionListener(this);
 		contentPane.add(btnAlemania);
 		
 		btnHolanda = new JButton("Holanda");
-		btnHolanda.setBounds(457, 307, 85, 21);
+		btnHolanda.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnHolanda.setBounds(449, 217, 122, 52);
 		btnHolanda.addActionListener(this);
 		contentPane.add(btnHolanda);
 	}
