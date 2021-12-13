@@ -314,8 +314,9 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 				String codigoPostal= textFieldCodigoPostal.getText();
 				String pais=textFieldPais.getText();
 				JSONArray output=services.filtrarCliente(desde,hasta,nombre,apellidos,numero,codigoPostal,pais);
+				setVisible(false);
 				try {
-					System.out.print(output.toString(2));
+					new VentanaHolandaResultado(services,output.toString(2)).setVisible(true);
 				} catch (JSONException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

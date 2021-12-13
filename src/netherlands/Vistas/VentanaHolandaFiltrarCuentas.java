@@ -19,6 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.ButtonGroup;
 import javax.swing.border.TitledBorder;
 
+import org.json.JSONException;
+
 import netherlands.Services.HolandaService;
 
 import javax.swing.border.LineBorder;
@@ -125,7 +127,8 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 				else if (rbInactiva.isSelected())
 					estado="inactiva";
 				String cuentas = holandaService.filtrarCuentas(estado, textField.getText());
-				JOptionPane.showMessageDialog(frame,cuentas);
+				setVisible(false);
+				new VentanaHolandaResultado(services,cuentas).setVisible(true);
 			}
 		});
 		btnNewButton.setBounds(244, 338, 172, 29);
