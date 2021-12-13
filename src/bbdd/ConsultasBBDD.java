@@ -140,4 +140,24 @@ public class ConsultasBBDD {
 		}
 		return rs;
 	}
+	
+	public ResultSet filtrarCuentas(String estado, String IBAN) {
+		rs=null;
+		try {
+			stm = conexion.createStatement();
+			System.out.println(IBAN+" "+estado);
+			if (!IBAN.equals("") && !estado.equals(""))
+				rs=stm.executeQuery("SELECT * FROM CuentaEbury cuenta WHERE cuenta.numeroCuenta='"+IBAN+"' AND cuenta.estadoCuenta='"+estado+"';");
+			else if (IBAN.equals("") && !estado.equals(""))
+				rs=stm.executeQuery("SELECT * FROM CuentaEbury cuenta WHERE cuenta.estadoCuenta='"+estado+"';");
+			else if (!IBAN.equals("") && estado.equals(""))
+				rs=stm.executeQuery("SELECT * FROM CuentaEbury cuenta WHERE cuenta.numeroCuenta='"+IBAN+"';");
+			else 
+				rs=stm.executeQuery("SELECT * FROM CuentaEbury");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
 }

@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
@@ -29,7 +31,7 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 	private static  VentanaHolandaFiltrarCuentas frame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
-	private HolandaService services;
+	private HolandaService holandaService;
 
 	/**
 	 * Launch the application.
@@ -50,23 +52,14 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaHolandaFiltrarCuentas(HolandaService sevices) {
-		this.services=services;
+	public VentanaHolandaFiltrarCuentas(HolandaService services) {
+		this.holandaService=services;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JButton btnNewButton = new JButton("Filtrar Cuentas");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setBounds(244, 338, 172, 29);
-		contentPane.add(btnNewButton);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
@@ -100,17 +93,17 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 		lblNewLabel_2.setBounds(78, 210, 45, 13);
 		contentPane.add(lblNewLabel_2);
 		
-		JRadioButton Activa = new JRadioButton("Activa\r\n");
-		Activa.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		buttonGroup.add(Activa);
-		Activa.setBounds(157, 182, 103, 21);
-		contentPane.add(Activa);
+		JRadioButton rbActiva = new JRadioButton("Activa\r\n");
+		rbActiva.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		buttonGroup.add(rbActiva);
+		rbActiva.setBounds(157, 182, 103, 21);
+		contentPane.add(rbActiva);
 		
-		JRadioButton Inactiva = new JRadioButton("Inactiva");
-		Inactiva.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		buttonGroup.add(Inactiva);
-		Inactiva.setBounds(157, 230, 103, 21);
-		contentPane.add(Inactiva);
+		JRadioButton rbInactiva = new JRadioButton("Inactiva");
+		rbInactiva.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		buttonGroup.add(rbInactiva);
+		rbInactiva.setBounds(157, 230, 103, 21);
+		contentPane.add(rbInactiva);
 		
 		JLabel lblNewLabel_3 = new JLabel("IBAN:\r\n");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -121,5 +114,22 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 		textField.setBounds(133, 283, 250, 19);
 		contentPane.add(textField);
 		textField.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Filtrar Cuentas");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String estado="";
+				if (rbActiva.isSelected())
+					estado="activa";
+				else if (rbInactiva.isSelected())
+					estado="inactiva";
+				String cuentas = holandaService.filtrarCuentas(estado, textField.getText());
+				JOptionPane.showMessageDialog(frame,cuentas);
+			}
+		});
+		btnNewButton.setBounds(244, 338, 172, 29);
+		contentPane.add(btnNewButton);
+		
 	}
 }
