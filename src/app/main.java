@@ -1,4 +1,5 @@
-import Vista.Inicio;
+package app;
+import app.Vistas.*;
 import bbdd.Conexion;
 
 public class main {

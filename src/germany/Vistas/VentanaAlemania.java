@@ -1,4 +1,4 @@
-package Vista;
+package germany.Vistas;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Alemania.Proceso;
+import germany.Services.Proceso;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;

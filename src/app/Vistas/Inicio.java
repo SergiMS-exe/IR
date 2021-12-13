@@ -1,4 +1,4 @@
-package Vista;
+package app.Vistas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -9,7 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Alemania.Proceso;
+import germany.Services.Proceso;
+import germany.Vistas.VentanaAlemania;
+import netherlands.Vistas.VentanaHolanda;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;

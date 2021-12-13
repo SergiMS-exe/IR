@@ -1,4 +1,4 @@
-package Vista;
+package netherlands.Vistas;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -25,6 +25,7 @@ import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import net.miginfocom.swing.MigLayout;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
@@ -117,7 +118,7 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		textField_1.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("");
-		lblNewLabel_5.setIcon(new ImageIcon(VentanaHolandaFiltrarClientes.class.getResource("/Holanda/res/calendarioPeque.png")));
+		lblNewLabel_5.setIcon(new ImageIcon(VentanaHolandaFiltrarClientes.class.getResource("/res/calendarioPeque.png")));
 		C_BDC_C_Desde.add(lblNewLabel_5);
 		
 		JPanel C_BDC_C_Hasta = new JPanel();
@@ -133,7 +134,7 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		C_BDC_C_Hasta.add(textField);
 		
 		JLabel lblNewLabel_5_1 = new JLabel("");
-		lblNewLabel_5_1.setIcon(new ImageIcon(VentanaHolandaFiltrarClientes.class.getResource("/Holanda/res/calendarioPeque.png")));
+		lblNewLabel_5_1.setIcon(new ImageIcon(VentanaHolandaFiltrarClientes.class.getResource("/res/calendarioPeque.png")));
 		C_BDC_C_Hasta.add(lblNewLabel_5_1);
 		
 		JPanel C_BDC_Top = new JPanel();

@@ -11,8 +11,26 @@ public class ConsultasBBDD {
 	private Connection conexion = c.conectar();
 	private Statement stm = null;
 	private ResultSet rs = null; 
-	private String personaRel = "select from PersonaRelacionada pr, Cliente c, CuentaEbury e, PersonaRelacionadaCliente prcl, PersonaRelacionadaCuenta prc where c.id=prcl.id_cliente and prcl.id_personaRelacionada= pr.id and pr.id=prc.idPersona and prc.idCuenta=";
-	private String semanal ="select E.numeroCuenta, P.apellido, P.nombre, C.id_direccion, C.numeroIdentificacion, P.fechaNacimiento,E.id from Cliente C, CuentaEbury E, Persona P where E.propietario = C.id and  E.estadoCuenta != 'cerrada' and E.estadoCuenta = 'activa' and  TIMESTAMPDIFF (YEAR,E.fechaApertura,curdate())<=5";
+	private String inicialPersonaIndividual = "select persona.apellido, persona.nombre, cuenta.numeroCuenta, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento"
+			+ " from Cliente cliente, CuentaEbury cuenta, Direccion direccion, Persona persona"
+			+ " where cliente.id in (select propietario from CuentaEbury) and cuenta.propietario=cliente.id"
+			+ " and direccion.id = cliente.id_direccion and persona.id = cliente.id and (select TIMESTAMPDIFF(YEAR, cuenta.fechaApertura, '2021-01-01'))<=5";
+	private String inicialPersonaRelacionadaEmpresa = "select persona.apellido, persona.nombre, cuenta.numeroCuenta, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento"
+			+ " from Cliente cliente, CuentaEbury cuenta, Direccion direccion, Persona persona\n"
+			+ " where cliente.id in( select persona.id_personaRelacionada from Cliente cliente, PersonaRelacionadaCliente persona"
+			+ " where cliente.id in(select propietario from CuentaEbury) and persona.id_cliente=cliente.id)"
+			+ " and cuenta.propietario=(select id_cliente from PersonaRelacionadaCliente where id_personaRelacionada=cliente.id)"
+			+ " and persona.id = cliente.id and direccion.id = cliente.id_direccion and (select TIMESTAMPDIFF(YEAR, cuenta.fechaApertura, '2021-01-01'))<=5 ";
+	private String semanalPersonaIndividual = "select persona.apellido, persona.nombre, cuenta.numeroCuenta, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento \n"
+			+ " from Cliente cliente, CuentaEbury cuenta, Direccion direccion, Persona persona"
+			+ " where cliente.id in (select propietario from CuentaEbury where estadoCuenta = 'activa') and cliente.estado = 'Activo' and cuenta.propietario=cliente.id"
+			+ " and direccion.id = cliente.id_direccion and persona.id = cliente.id and (select TIMESTAMPDIFF(YEAR, cuenta.fechaApertura, '2021-01-01'))<=5";
+	private String semanalPersonaRelacionadaEmpresa = "select persona.apellido, persona.nombre, cuenta.numeroCuenta, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento"
+			+ " from Cliente cliente, CuentaEbury cuenta, Direccion direccion, Persona persona"
+			+ " where cliente.id in( select persona.id_personaRelacionada from Cliente cliente, PersonaRelacionadaCliente persona"
+			+ " where cliente.id in(select propietario from CuentaEbury where estadoCuenta='activa') and persona.id_cliente=cliente.id and cliente.estado='Activo')"
+			+ " and cuenta.propietario=(select id_cliente from PersonaRelacionadaCliente where id_personaRelacionada=cliente.id) and cuenta.estadoCuenta = 'activa'"
+			+ " and persona.id = cliente.id and direccion.id = cliente.id_direccion and (select TIMESTAMPDIFF(YEAR, cuenta.fechaApertura, '2021-01-01'))<=5";
 	
 	
 	public ResultSet obtenerClientes() {
@@ -20,22 +38,6 @@ public class ConsultasBBDD {
 		try {
 			stm = conexion.createStatement();
 			rs = stm.executeQuery("select * from Cliente");
-			
-			/*
-			 * Así se recorrería el resultSet y se sacarían por pantalla todos los clientes de la bbdd
-			 * 
-			
-			while(rs.next()) {
-				int id = rs.getInt(1);
-				String numeroIdentificacion = rs.getString(2);
-				String estado = rs.getString(3);
-				String fechaInicio = rs.getDate(4).toString();
-				int direccion = rs.getInt(5);
-				
-				System.out.println(id + " - " + numeroIdentificacion + " - " + estado + " - " + fechaInicio + " - " + direccion);
-			}
-			
-			*/
 			
 		} catch (SQLException e) {
 			
@@ -49,23 +51,7 @@ public class ConsultasBBDD {
 		try {
 			stm = conexion.createStatement();
 			rs = stm.executeQuery("select * from Persona where id =" + id);
-			
-			/*
-			 * Así se recorrería el resultSet y se sacarían por pantalla todos los clientes de la bbdd
-			 * 
-			
-			while(rs.next()) {
-				int id = rs.getInt(1);
-				String numeroIdentificacion = rs.getString(2);
-				String estado = rs.getString(3);
-				String fechaInicio = rs.getDate(4).toString();
-				int direccion = rs.getInt(5);
-				
-				System.out.println(id + " - " + numeroIdentificacion + " - " + estado + " - " + fechaInicio + " - " + direccion);
-			}
-			
-			*/
-			
+		
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -87,13 +73,24 @@ public class ConsultasBBDD {
 		return rs;
 	}
 	
-	public ResultSet reporteInicial() {
+	public ResultSet reporteInicial1() {
 		rs = null;
 		try {
 			stm = conexion.createStatement();
-			rs = stm.executeQuery("SELECT E.numeroCuenta, P.apellido, P.nombre, C.id_direccion, C.numeroIdentificacion, P.fechaNacimiento,E.id "
-					+				"FROM Cliente C, CuentaEbury E, Persona P "
-					+ 				"WHERE E.propietario = C.id");
+			rs = stm.executeQuery(inicialPersonaIndividual);
+	
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
+	public ResultSet reporteInicial2() {
+		rs = null;
+		try {
+			stm = conexion.createStatement();
+			rs = stm.executeQuery(inicialPersonaRelacionadaEmpresa);
 	
 		} catch (SQLException e) {
 			
@@ -117,11 +114,23 @@ public class ConsultasBBDD {
 		return rs;
 	}
 	
-	public ResultSet reporteSemanal() {
+	public ResultSet reporteSemanal1() {
 		rs = null;
 		try {
 			stm = conexion.createStatement();
-			rs = stm.executeQuery(semanal);
+			rs = stm.executeQuery(semanalPersonaIndividual);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
+	public ResultSet reporteSemanal2() {
+		rs = null;
+		try {
+			stm = conexion.createStatement();
+			rs = stm.executeQuery(semanalPersonaRelacionadaEmpresa);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
