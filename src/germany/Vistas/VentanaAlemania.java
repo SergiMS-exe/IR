@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 
+import app.Vistas.Inicio;
 import germany.Services.*;
 
 import javax.swing.JButton;
@@ -63,6 +64,16 @@ public class VentanaAlemania extends JFrame implements ActionListener {
 		btnReporteSemanal.setBounds(50, 240, 300, 57);
 		btnReporteSemanal.addActionListener(this);
 		contentPane.add(btnReporteSemanal);
+		
+		JButton btnNewButton = new JButton("< Retroceder");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new Inicio().setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(33, 21, 110, 21);
+		contentPane.add(btnNewButton);
 		
 		JLabel lbTitulo = new JLabel("ALEMANIA");
 		lbTitulo.setFont(new Font("Tahoma", Font.PLAIN, 40));

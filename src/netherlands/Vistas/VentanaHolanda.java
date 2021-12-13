@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.border.TitledBorder;
 
+import app.Vistas.Inicio;
 import netherlands.Services.*;
 import netherlands.Vistas.*;
 
@@ -101,6 +102,16 @@ public class VentanaHolanda extends JFrame {
 		});
 		btnNewButton_2.setBounds(251, 195, 129, 41);
 		contentPane.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("< Retroceder");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new Inicio().setVisible(true);
+			}
+		});
+		btnNewButton_3.setBounds(23, 22, 116, 21);
+		contentPane.add(btnNewButton_3);
 		
 		JLabel lblNewLabel_1 = new JLabel("Establecer conexi\u00F3n:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
