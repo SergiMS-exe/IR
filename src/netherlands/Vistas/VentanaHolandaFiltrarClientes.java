@@ -9,12 +9,18 @@ import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Component;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.awt.Color;
 import javax.swing.JSplitPane;
 import javax.swing.BoxLayout;
@@ -304,10 +310,16 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 				String hasta = textFieldHasta.getText();
 				String nombre=textFieldNombre.getText();
 				String apellidos= textFieldApellidos.getText();
-				String numero = textFieldApellidos.getText();
+				String numero = textFieldNumero.getText();
 				String codigoPostal= textFieldCodigoPostal.getText();
 				String pais=textFieldPais.getText();
-				//String output=services.filtrarCliente(desde,hasta,nombre,apellidos,numero,codigoPostal,pais);
+				JSONArray output=services.filtrarCliente(desde,hasta,nombre,apellidos,numero,codigoPostal,pais);
+				try {
+					System.out.print(output.toString(2));
+				} catch (JSONException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 					
 			}
 		});

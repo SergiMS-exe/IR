@@ -36,41 +36,72 @@ public class ConsultasBBDD {
 		return c.getEstado();
 	}
 	
-	public ResultSet obtenerClientes() {
-		rs = null;
+	public ResultSet obtenerClientesIndividualesFiltrados(String desde,String hasta,String nombre, String apellidos, String numero,String codigoPostal,String pais) {
+		rs=null;
+		String[] tuplaNombre=nombre.split(" ");
+		String[] tuplaApellido=apellidos.split(" ");
+		String queryDatos="select * "
+				+ "from Cliente c, Persona p, Direccion d "
+				+ "where fechaInicio>='"+desde+"' and fechaInicio<='"+hasta+"' and p.id=c.id and c.id_direccion=d.id "
+						+ "and p.nombre = '"+tuplaNombre[0]+"' and p.segundoNombre = '"+tuplaNombre[1]+"' and p.apellido='"+tuplaApellido[0]+"' and p.segundoApellido = '"+tuplaApellido[1]+"' "
+						+ "and d.numero = '"+numero+"' and d.codigoPostal = '"+codigoPostal+"' and d.pais = '"+pais+"';";
 		try {
 			stm = conexion.createStatement();
-			rs = stm.executeQuery("select * from Cliente");
-			
-		} catch (SQLException e) {
-			
+			rs = stm.executeQuery(queryDatos);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return rs;
-	}
-	
-	public ResultSet obtenerPersona(int id) {
-		rs = null;
-		try {
-			stm = conexion.createStatement();
-			rs = stm.executeQuery("select * from Persona where id =" + id);
 		
-		} catch (SQLException e) {
-			
+	}
+	
+	public ResultSet obtenerDireccionesCliente(String id) {
+		rs=null;
+		String queryCuentas="select * "
+				+ "from Cliente c, Direccion d "
+				+ "where c.id='"+id+" and c.id_direccion=d.id';";
+		try {
+			stm = conexion.createStatement();
+			rs = stm.executeQuery(queryCuentas);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return rs;
 	}
 	
-	public ResultSet personasRelacionadas(int id) {
-		rs = null;
+	public ResultSet obtenerCuentasDelCliente(String id,String Country) {
+		rs=null;
+		String queryCuentas="select * from CuentaEbury where propietario='"+id+"';";
 		try {
 			stm = conexion.createStatement();
-			rs = stm.executeQuery("select *\n"
-					+ "from PersonaRelacionada pr, Cliente c, CuentaEbury e, PersonaRelacionadaCliente prcl, PersonaRelacionadaCuenta prc\n"
-					+ "where c.id=prcl.id_cliente and prcl.id_personaRelacionada= pr.id and pr.id=prc.idPersona and prc.idCuenta=" + id);		
-		} catch (SQLException e) {
-			
+			rs = stm.executeQuery(queryCuentas);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
+	public ResultSet obtenerCuentasAutorizadasCliente(String id,String Country) {
+		rs=null;
+		String queryCuentas="select * from PersonaRelacionadaCliente, CuentaEbury where id=id_cliente and id_personaRelacionada='"+id+"';";
+		try {
+			stm = conexion.createStatement();
+			rs = stm.executeQuery(queryCuentas);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
+	public ResultSet obtenerPersonasAutorizadasCliente(String id) {
+		String querypersonasAutorizadas="select * "
+				+ "from PersonaRelacionadaCliente r, Persona p,  Direccion d "
+				+ "where r.id_cliente="+id+" and p.id=r.id_personaRelacionada and p.id=d.id; ";
+		System.out.println(querypersonasAutorizadas);
+		try {
+			stm = conexion.createStatement();
+			rs = stm.executeQuery(querypersonasAutorizadas);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return rs;
@@ -95,21 +126,6 @@ public class ConsultasBBDD {
 			stm = conexion.createStatement();
 			rs = stm.executeQuery(inicialPersonaRelacionadaEmpresa);
 	
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		return rs;
-	}
-	
-	public ResultSet obtenerDireccion(int id) {
-		rs = null;
-		try {
-			stm = conexion.createStatement();
-			rs = stm.executeQuery("SELECT * "
-					+ 				"FROM Direccion "
-					+ 				"WHERE id =" +id);
-
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
