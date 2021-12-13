@@ -13,22 +13,27 @@ import bbdd.*;
 
 public class Proceso {
 
-	//private int YEAR = 2021;
-	private String inicial = "files/inicial.csv";
-	private String semanal = "files/semanal.csv";
+	// private int YEAR = 2021;
+	private static String INICIAL = "files/inicial.csv";
+	private static String SEMANAL = "files/semanal.csv";
 
-	public void rInicial() {
-		ConsultasBBDD cuentas = new ConsultasBBDD();
-		ResultSet rs = cuentas.reporteInicial1();
-		List<List<String>> rows = toList(rs);
-		rs = cuentas.reporteInicial2();
-		List<List<String>> rows1 = toList(rs);
-		imprimirCSV(rows,rows1,inicial);
+	public Boolean rInicial() {
+		if (!new File(INICIAL).exists()) {
+			ConsultasBBDD cuentas = new ConsultasBBDD();
+			ResultSet rs = cuentas.reporteInicial1();
+			List<List<String>> rows = toList(rs);
+			rs = cuentas.reporteInicial2();
+			List<List<String>> rows1 = toList(rs);
+			imprimirCSV(rows, rows1, INICIAL);
+			return true;
+		}
+		return false;
 	}
 
 	private List<List<String>> toList(ResultSet rs) {
 		// TODO Auto-generated method stub
-		List<List<String>> l = new ArrayList<List<String>>();;
+		List<List<String>> l = new ArrayList<List<String>>();
+		;
 		try {
 			while (rs.next()) {
 				String apellido = rs.getString(1);
@@ -41,9 +46,8 @@ public class Proceso {
 				String numeroIdentificacion = rs.getString(8);
 				String fechaNacimiento = rs.getDate(9).toString();
 
-
-				l.add(Arrays.asList(apellido, nombre, numeroCuenta, calle,ciudad, String.valueOf(codigoPostal),
-						pais, numeroIdentificacion, fechaNacimiento));
+				l.add(Arrays.asList(apellido, nombre, numeroCuenta, calle, ciudad, String.valueOf(codigoPostal), pais,
+						numeroIdentificacion, fechaNacimiento));
 
 			}
 		} catch (SQLException e) {
@@ -60,11 +64,11 @@ public class Proceso {
 		List<List<String>> rows = toList(rs);
 		rs = cuentas.reporteSemanal2();
 		List<List<String>> rows1 = toList(rs);
-		imprimirCSV(rows,rows1,semanal);
+		imprimirCSV(rows, rows1, SEMANAL);
 
 	}
 
-	private void imprimirCSV(List<List<String>> rows, List<List<String>> rows1,String fileName) {
+	private void imprimirCSV(List<List<String>> rows, List<List<String>> rows1, String fileName) {
 		boolean existe = new File(fileName).exists();
 
 		if (existe) {
@@ -98,12 +102,11 @@ public class Proceso {
 				fw.append(String.join("; ", rowData));
 				fw.append("\r\n");
 			}
-			
+
 			for (List<String> rowData : rows1) {
 				fw.append(String.join("; ", rowData));
 				fw.append("\r\n");
 			}
-			
 
 			fw.flush();
 			fw.close();

@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.border.TitledBorder;
 
-import bbdd.Conexion;
+import netherlands.Services.*;
 
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -23,6 +23,7 @@ public class VentanaHolanda extends JFrame {
 
 	private JPanel contentPane;
 	static VentanaHolanda frame;
+	private HolandaService services=new HolandaService();
 	
 
 	/**
@@ -91,10 +92,8 @@ public class VentanaHolanda extends JFrame {
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Conexion miBD = new Conexion() ;
-				miBD.conectar();
 				AvisoConexion ac = new AvisoConexion();
-				ac.setLblNewLabel(miBD.getEstado());
+				ac.setLblNewLabel(services.getEstado());
 				ac.setVisible(true);
 			}
 		});

@@ -1,6 +1,11 @@
 package netherlands.Services;
 
-public class HolandaService {
-	
+import bbdd.Conexion;
 
+public class HolandaService {
+	public String getEstado() {
+		Conexion miBD = new Conexion() ;
+		miBD.conectar();
+		return miBD.getEstado();
+	}
 }

@@ -25,7 +25,6 @@ public class VentanaAlemania extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton btnReporteInicial;
 	private JButton btnReporteSemanal;
-	private int contadorReporteInicial = 0;
 
 	/**
 	 * Launch the application.
@@ -77,10 +76,8 @@ public class VentanaAlemania extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		Proceso p = new Proceso();
 		if(e.getSource()==btnReporteInicial) {
-			if(contadorReporteInicial == 0) {
-				p.rInicial();
+			if(p.rInicial()) {
 				JOptionPane.showMessageDialog(this,"Reporte inicial generado correctamente");
-				contadorReporteInicial++;
 			}else {
 				JOptionPane.showMessageDialog(this,"Error: Ya se ha generado un reporte inicial anteriormente");
 			}
