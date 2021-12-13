@@ -64,32 +64,32 @@ public class HolandaService {
 					ResultSet rsAddressAutorizedClient = miBD.obtenerDireccionesCliente(id);
 					autorizedClient.append("addresses", obtenerAddressCliente(rsAddressAutorizedClient));
 				}
-				data.append("Relatedperson", autorizedClients);
+				data.put("Relatedperson", autorizedClients);
 				
 				// addresses
 				ResultSet rsAddress = miBD.obtenerDireccionesCliente(id);
-				data.append("addresses", obtenerAddressCliente(rsAddress));
+				data.put("addresses", obtenerAddressCliente(rsAddress));
 				
 				// personalData
 
 				Boolean activeCostumer = rsData.getString("estado").equals("Activo");
 				data.put("activeCostumer", activeCostumer);
 				String dateOfBirth = rsData.getString("fechaNacimiento").toString();
-				data.append("dateOfBirth", dateOfBirth);
+				data.put("dateOfBirth", dateOfBirth);
 
 				JSONObject name = new JSONObject();
 				String firstname = rsData.getString("nombre");
 				name.put("firstname", firstname);
 				String lastName = rsData.getString("segundoNombre");
-				name.append("lastName", lastName);
-				data.append("name", name);
+				name.put("lastName", lastName);
+				data.put("name", name);
 				
 				// accounts
 				ResultSet rsAccountsOwner = miBD.obtenerCuentasDelCliente(id, "ES");
 				ResultSet rsAccountAutorized = miBD.obtenerCuentasAutorizadasCliente(id, "ES");
 				List accounts=obtenerAccountsCliente(rsAccountsOwner,"Owner");
 				accounts.addAll(obtenerAccountsCliente(rsAccountAutorized,"Autorized"));
-				data.append("products", accounts);
+				data.put("products", accounts);
 				individual.put(data);
 			}
 		} catch (SQLException e) {
