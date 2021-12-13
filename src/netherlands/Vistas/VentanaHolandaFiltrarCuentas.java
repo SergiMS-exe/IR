@@ -74,10 +74,10 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 38));
 		
-		JButton btnNewButton_1 = new JButton("< Retroceder\r\n");
+		JButton btnNewButton_1 = new JButton("< Retroceder");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
+				setVisible(false);
 				new VentanaHolanda().setVisible(true);
 			}
 		});

@@ -68,196 +68,242 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(null);
 		
 		JPanel Top = new JPanel();
-		contentPane.add(Top, BorderLayout.NORTH);
-		Top.setLayout(new BorderLayout(0, 0));
+		Top.setBounds(5, 5, 832, 104);
+		contentPane.add(Top);
 		
 		JButton btnNewButton = new JButton("< Retroceder");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
+				setVisible(false);
 				new VentanaHolanda().setVisible(true);
 			}
 		});
-		Top.add(btnNewButton, BorderLayout.WEST);
+		btnNewButton.setBounds(38, 29, 111, 21);
+		Top.setLayout(null);
+		Top.add(btnNewButton);
 		
 		JPanel TOP_Titulo = new JPanel();
-		Top.add(TOP_Titulo, BorderLayout.SOUTH);
+		TOP_Titulo.setBounds(0, 31, 832, 73);
+		Top.add(TOP_Titulo);
+		TOP_Titulo.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Holanda");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 47));
-		lblNewLabel.setBorder(new LineBorder(new Color(0, 0, 0), 3, true));
+		lblNewLabel.setBounds(328, 5, 176, 63);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 38));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		TOP_Titulo.add(lblNewLabel);
 		
 		JPanel Center = new JPanel();
-		contentPane.add(Center, BorderLayout.CENTER);
-		Center.setLayout(new BorderLayout(0, 0));
+		Center.setBounds(5, 109, 832, 325);
+		contentPane.add(Center);
+		Center.setLayout(null);
 		
 		JPanel C_BusquedaDeClientes = new JPanel();
-		Center.add(C_BusquedaDeClientes, BorderLayout.NORTH);
-		C_BusquedaDeClientes.setLayout(new BorderLayout(0, 0));
+		C_BusquedaDeClientes.setBounds(0, 0, 832, 78);
+		Center.add(C_BusquedaDeClientes);
+		C_BusquedaDeClientes.setLayout(null);
 		
 		JPanel C_BDC_Center = new JPanel();
-		C_BusquedaDeClientes.add(C_BDC_Center, BorderLayout.CENTER);
-		C_BDC_Center.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		C_BDC_Center.setBounds(0, 33, 832, 45);
+		C_BusquedaDeClientes.add(C_BDC_Center);
+		C_BDC_Center.setLayout(null);
 		
 		JPanel C_BDC_C_Desde = new JPanel();
+		C_BDC_C_Desde.setBounds(227, 5, 188, 35);
 		C_BDC_Center.add(C_BDC_C_Desde);
-		C_BDC_C_Desde.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		C_BDC_C_Desde.setLayout(null);
 		
 		JLabel lblNewLabel_3 = new JLabel("Desde:");
+		lblNewLabel_3.setBounds(5, 8, 47, 19);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		C_BDC_C_Desde.add(lblNewLabel_3);
 		
 		textField_1 = new JTextField();
+		textField_1.setBounds(57, 8, 96, 19);
 		C_BDC_C_Desde.add(textField_1);
 		textField_1.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("");
-		lblNewLabel_5.setIcon(new ImageIcon(VentanaHolandaFiltrarClientes.class.getResource("/Holanda/res/calendarioPeque.png")));
+		lblNewLabel_5.setBounds(158, 5, 25, 25);
+		lblNewLabel_5.setIcon(new ImageIcon(VentanaHolandaFiltrarClientes.class.getResource("/res/calendarioPeque.png")));
 		C_BDC_C_Desde.add(lblNewLabel_5);
 		
 		JPanel C_BDC_C_Hasta = new JPanel();
+		C_BDC_C_Hasta.setBounds(420, 5, 184, 35);
 		C_BDC_Center.add(C_BDC_C_Hasta);
-		C_BDC_C_Hasta.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		C_BDC_C_Hasta.setLayout(null);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Hasta:");
+		lblNewLabel_3_1.setBounds(5, 8, 43, 19);
 		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		C_BDC_C_Hasta.add(lblNewLabel_3_1);
 		
 		textField = new JTextField();
+		textField.setBounds(53, 8, 96, 19);
 		textField.setColumns(10);
 		C_BDC_C_Hasta.add(textField);
 		
 		JLabel lblNewLabel_5_1 = new JLabel("");
-		lblNewLabel_5_1.setIcon(new ImageIcon(VentanaHolandaFiltrarClientes.class.getResource("/Holanda/res/calendarioPeque.png")));
+		lblNewLabel_5_1.setBounds(154, 5, 25, 25);
+		lblNewLabel_5_1.setIcon(new ImageIcon(VentanaHolandaFiltrarClientes.class.getResource("/res/calendarioPeque.png")));
 		C_BDC_C_Hasta.add(lblNewLabel_5_1);
 		
 		JPanel C_BDC_Top = new JPanel();
-		C_BusquedaDeClientes.add(C_BDC_Top, BorderLayout.NORTH);
-		C_BDC_Top.setLayout(new MigLayout("", "[110px][][][][][][][][][][][][]", "[13px]"));
+		C_BDC_Top.setBounds(0, 0, 832, 33);
+		C_BusquedaDeClientes.add(C_BDC_Top);
+		C_BDC_Top.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Busqueda de clientes:");
+		lblNewLabel_1.setBounds(208, 7, 167, 19);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		C_BDC_Top.add(lblNewLabel_1, "cell 4 0,alignx center,aligny center");
+		C_BDC_Top.add(lblNewLabel_1);
 		
 		JPanel C_Datos = new JPanel();
-		Center.add(C_Datos, BorderLayout.CENTER);
-		C_Datos.setLayout(new BorderLayout(0, 0));
+		C_Datos.setBounds(0, 78, 832, 247);
+		Center.add(C_Datos);
+		C_Datos.setLayout(null);
 		
 		JPanel C_DatosPersonales = new JPanel();
-		C_Datos.add(C_DatosPersonales, BorderLayout.NORTH);
-		C_DatosPersonales.setLayout(new BorderLayout(0, 0));
+		C_DatosPersonales.setBounds(0, 0, 832, 99);
+		C_Datos.add(C_DatosPersonales);
+		C_DatosPersonales.setLayout(null);
 		
 		JPanel C_DP_Top = new JPanel();
-		C_DatosPersonales.add(C_DP_Top, BorderLayout.NORTH);
-		C_DP_Top.setLayout(new MigLayout("", "[][][][][][][][][]", "[]"));
+		C_DP_Top.setBounds(0, 0, 832, 33);
+		C_DatosPersonales.add(C_DP_Top);
+		C_DP_Top.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("Datos personales:");
+		lblNewLabel_2.setBounds(210, 7, 137, 19);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		C_DP_Top.add(lblNewLabel_2, "cell 7 0");
+		C_DP_Top.add(lblNewLabel_2);
 		
 		JPanel C_DP_Center = new JPanel();
-		C_DatosPersonales.add(C_DP_Center, BorderLayout.CENTER);
-		C_DP_Center.setLayout(new BorderLayout(0, 0));
+		C_DP_Center.setBounds(0, 33, 832, 66);
+		C_DatosPersonales.add(C_DP_Center);
+		C_DP_Center.setLayout(null);
 		
 		JPanel C_DP_C_Nombre = new JPanel();
-		C_DP_Center.add(C_DP_C_Nombre, BorderLayout.NORTH);
-		C_DP_C_Nombre.setLayout(new MigLayout("", "[59px][95px][][][][][][]", "[19px]"));
+		C_DP_C_Nombre.setBounds(0, 0, 832, 33);
+		C_DP_Center.add(C_DP_C_Nombre);
+		C_DP_C_Nombre.setLayout(null);
 		
 		JLabel lblNewLabel_4 = new JLabel("Nombre: ");
+		lblNewLabel_4.setBounds(227, 7, 64, 19);
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		C_DP_C_Nombre.add(lblNewLabel_4, "cell 4 0,alignx left,aligny top");
+		C_DP_C_Nombre.add(lblNewLabel_4);
 		
 		textField_2 = new JTextField();
+		textField_2.setBounds(295, 7, 303, 19);
 		textField_2.setColumns(33);
-		C_DP_C_Nombre.add(textField_2, "cell 5 0,alignx left,aligny top");
+		C_DP_C_Nombre.add(textField_2);
 		
 		JPanel C_DP_C_Apellidos = new JPanel();
-		C_DP_Center.add(C_DP_C_Apellidos, BorderLayout.CENTER);
+		C_DP_C_Apellidos.setBounds(0, 33, 832, 33);
+		C_DP_Center.add(C_DP_C_Apellidos);
 		
 		JPanel C_Direccion = new JPanel();
-		C_Datos.add(C_Direccion, BorderLayout.CENTER);
-		C_Direccion.setLayout(new BorderLayout(0, 0));
+		C_Direccion.setBounds(0, 99, 832, 148);
+		C_Datos.add(C_Direccion);
+		C_Direccion.setLayout(null);
 		
 		JPanel C_D_Top = new JPanel();
-		C_Direccion.add(C_D_Top, BorderLayout.NORTH);
-		C_D_Top.setLayout(new MigLayout("", "[][][][][][][][][]", "[]"));
+		C_D_Top.setBounds(0, 0, 832, 33);
+		C_Direccion.add(C_D_Top);
 		
 		JLabel lblNewLabel_7 = new JLabel("Direccion:");
+		lblNewLabel_7.setBounds(210, 7, 77, 19);
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		C_D_Top.add(lblNewLabel_7, "cell 7 0");
+		C_D_Top.setLayout(null);
+		C_D_Top.add(lblNewLabel_7);
 		
 		JPanel C_D_Center = new JPanel();
-		C_Direccion.add(C_D_Center, BorderLayout.CENTER);
-		C_D_Center.setLayout(new BorderLayout(0, 0));
+		C_D_Center.setBounds(0, 33, 832, 115);
+		C_Direccion.add(C_D_Center);
+		C_D_Center.setLayout(null);
 		
 		JPanel C_D_C_Numero = new JPanel();
-		C_D_Center.add(C_D_C_Numero, BorderLayout.NORTH);
-		C_D_C_Numero.setLayout(new MigLayout("", "[31px][120px][][][][][][][][][][][][][][]", "[19px]"));
+		C_D_C_Numero.setBounds(0, 0, 832, 33);
+		C_D_Center.add(C_D_C_Numero);
+		C_D_C_Numero.setLayout(null);
 		
 		JLabel lblNewLabel_8 = new JLabel("N\u00FAmero: ");
-		C_D_C_Numero.add(lblNewLabel_8, "cell 5 0,alignx left,aligny top");
+		lblNewLabel_8.setBounds(233, 7, 64, 19);
+		C_D_C_Numero.add(lblNewLabel_8);
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		textField_4 = new JTextField();
-		C_D_C_Numero.add(textField_4, "cell 6 0,alignx left,aligny top");
+		textField_4.setBounds(301, 7, 299, 19);
+		C_D_C_Numero.add(textField_4);
 		textField_4.setColumns(33);
 		
 		JPanel C_D_C_More = new JPanel();
-		C_D_Center.add(C_D_C_More, BorderLayout.CENTER);
-		C_D_C_More.setLayout(new BorderLayout(0, 0));
+		C_D_C_More.setBounds(0, 33, 832, 82);
+		C_D_Center.add(C_D_C_More);
+		C_D_C_More.setLayout(null);
 		
 		JPanel C_D_C_CodigoPostal = new JPanel();
-		C_D_C_More.add(C_D_C_CodigoPostal, BorderLayout.NORTH);
+		C_D_C_CodigoPostal.setBounds(0, 0, 832, 33);
+		C_D_C_More.add(C_D_C_CodigoPostal);
 		
 		JLabel lblNewLabel_9 = new JLabel("Apellidos:");
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		C_DP_C_Apellidos.setLayout(new MigLayout("", "[64px][90px][][][][]", "[19px]"));
+		C_DP_C_Apellidos.setLayout(null);
 		
 		JLabel lblNewLabel_6 = new JLabel("Apellidos:");
+		lblNewLabel_6.setBounds(227, 7, 64, 19);
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		C_DP_C_Apellidos.add(lblNewLabel_6, "cell 4 0,alignx left,aligny top");
+		C_DP_C_Apellidos.add(lblNewLabel_6);
 		
 		textField_3 = new JTextField();
+		textField_3.setBounds(295, 7, 303, 19);
 		textField_3.setColumns(33);
-		C_DP_C_Apellidos.add(textField_3, "cell 5 0,alignx left,aligny top");
-		C_D_C_CodigoPostal.setLayout(new MigLayout("", "[97px][31px][][][][][][][][][][]", "[19px]"));
+		C_DP_C_Apellidos.add(textField_3);
+		C_D_C_CodigoPostal.setLayout(null);
 		
 		JLabel lblNewLabel_10 = new JLabel("C\u00F3digo postal:");
-		C_D_C_CodigoPostal.add(lblNewLabel_10, "cell 4 0,alignx left,aligny top");
+		lblNewLabel_10.setBounds(201, 7, 95, 19);
+		C_D_C_CodigoPostal.add(lblNewLabel_10);
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		textField_5 = new JTextField();
-		C_D_C_CodigoPostal.add(textField_5, "cell 5 0 2 1,alignx left,aligny top");
+		textField_5.setBounds(300, 7, 303, 19);
+		C_D_C_CodigoPostal.add(textField_5);
 		textField_5.setColumns(33);
 		
 		JPanel C_D_C_Pais = new JPanel();
-		C_D_C_More.add(C_D_C_Pais, BorderLayout.CENTER);
-		C_D_C_Pais.setLayout(new MigLayout("", "[31px][100px][][][][][][][][][][][][][][][][]", "[19px]"));
+		C_D_C_Pais.setBounds(0, 33, 832, 49);
+		C_D_C_More.add(C_D_C_Pais);
+		C_D_C_Pais.setLayout(null);
 		
 		JLabel lblNewLabel_11 = new JLabel("Pa\u00EDs: ");
+		lblNewLabel_11.setBounds(262, 7, 36, 19);
 		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		C_D_C_Pais.add(lblNewLabel_11, "cell 7 0,alignx left,aligny top");
+		C_D_C_Pais.add(lblNewLabel_11);
 		
 		textField_6 = new JTextField();
-		C_D_C_Pais.add(textField_6, "flowx,cell 8 0,alignx left,aligny top");
+		textField_6.setBounds(302, 7, 299, 19);
+		C_D_C_Pais.add(textField_6);
 		textField_6.setColumns(33);
 		
 		JPanel Bottom = new JPanel();
-		contentPane.add(Bottom, BorderLayout.SOUTH);
+		Bottom.setBounds(5, 434, 832, 41);
+		contentPane.add(Bottom);
 		
 		JButton btnNewButton_1 = new JButton("Filtrar Clientes");
+		btnNewButton_1.setBounds(338, 5, 155, 31);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		Bottom.setLayout(null);
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		Bottom.add(btnNewButton_1);
 	}
 }

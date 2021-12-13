@@ -15,6 +15,7 @@ import java.awt.Font;
 import javax.swing.border.TitledBorder;
 
 import netherlands.Services.*;
+import netherlands.Vistas.*;
 
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -58,7 +59,7 @@ public class VentanaHolanda extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
+				setVisible(false);
 				new VentanaHolandaFiltrarClientes().setVisible(true);
 			}
 		});
@@ -69,7 +70,7 @@ public class VentanaHolanda extends JFrame {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
+				setVisible(false);
 				new VentanaHolandaFiltrarCuentas().setVisible(true);
 			}
 		});
