@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import germany.Vistas.*;
+import netherlands.Services.HolandaService;
 import netherlands.Vistas.*;
 
 import javax.swing.JLabel;
@@ -75,7 +76,7 @@ public class Inicio extends JFrame implements ActionListener {
 		
 		if(e.getSource()==btnHolanda) {
 			this.setVisible(false);
-			new VentanaHolanda().setVisible(true);
+			new VentanaHolanda(new HolandaService()).setVisible(true);
 		}
 	}
 }

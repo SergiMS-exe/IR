@@ -24,23 +24,23 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
-import net.miginfocom.swing.MigLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
+
+import netherlands.Services.*;
 
 public class VentanaHolandaFiltrarClientes extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_1;
-	private JTextField textField;
-	private JTextField textField_6;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField textFieldDesde;
+	private JTextField textFieldHasta;
+	private JTextField textFieldPais;
+	private JTextField textFieldNumero;
+	private JTextField textFieldCodigoPostal;
+	private JTextField textFieldNombre;
+	private JTextField textFieldApellidos;
 
 	private static VentanaHolandaFiltrarClientes frame;
+	
+	private HolandaService services;
 	
 	/**
 	 * Launch the application.
@@ -49,7 +49,7 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new VentanaHolandaFiltrarClientes();
+					frame = new VentanaHolandaFiltrarClientes(new HolandaService());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,7 +61,8 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaHolandaFiltrarClientes() {
+	public VentanaHolandaFiltrarClientes(HolandaService services) {
+		this.services=services;
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 856, 517);
@@ -74,28 +75,28 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		Top.setBounds(5, 5, 832, 104);
 		contentPane.add(Top);
 		
-		JButton btnNewButton = new JButton("< Retroceder");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnRetroceder = new JButton("< Retroceder");
+		btnRetroceder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new VentanaHolanda().setVisible(true);
+				new VentanaHolanda(services).setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(38, 29, 111, 21);
+		btnRetroceder.setBounds(38, 29, 111, 21);
 		Top.setLayout(null);
-		Top.add(btnNewButton);
+		Top.add(btnRetroceder);
 		
 		JPanel TOP_Titulo = new JPanel();
 		TOP_Titulo.setBounds(0, 31, 832, 73);
 		Top.add(TOP_Titulo);
 		TOP_Titulo.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Holanda");
-		lblNewLabel.setBounds(328, 5, 176, 63);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 38));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
-		TOP_Titulo.add(lblNewLabel);
+		JLabel lblHolanda = new JLabel("Holanda");
+		lblHolanda.setBounds(328, 5, 176, 63);
+		lblHolanda.setFont(new Font("Tahoma", Font.PLAIN, 38));
+		lblHolanda.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHolanda.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		TOP_Titulo.add(lblHolanda);
 		
 		JPanel Center = new JPanel();
 		Center.setBounds(5, 109, 832, 325);
@@ -117,15 +118,15 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		C_BDC_Center.add(C_BDC_C_Desde);
 		C_BDC_C_Desde.setLayout(null);
 		
-		JLabel lblNewLabel_3 = new JLabel("Desde:");
-		lblNewLabel_3.setBounds(5, 8, 47, 19);
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		C_BDC_C_Desde.add(lblNewLabel_3);
+		JLabel lblDesde = new JLabel("Desde:");
+		lblDesde.setBounds(5, 8, 47, 19);
+		lblDesde.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		C_BDC_C_Desde.add(lblDesde);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(57, 8, 96, 19);
-		C_BDC_C_Desde.add(textField_1);
-		textField_1.setColumns(10);
+		textFieldDesde = new JTextField();
+		textFieldDesde.setBounds(57, 8, 96, 19);
+		C_BDC_C_Desde.add(textFieldDesde);
+		textFieldDesde.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("");
 		lblNewLabel_5.setBounds(158, 5, 25, 25);
@@ -137,15 +138,15 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		C_BDC_Center.add(C_BDC_C_Hasta);
 		C_BDC_C_Hasta.setLayout(null);
 		
-		JLabel lblNewLabel_3_1 = new JLabel("Hasta:");
-		lblNewLabel_3_1.setBounds(5, 8, 43, 19);
-		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		C_BDC_C_Hasta.add(lblNewLabel_3_1);
+		JLabel lblHasta = new JLabel("Hasta:");
+		lblHasta.setBounds(5, 8, 43, 19);
+		lblHasta.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		C_BDC_C_Hasta.add(lblHasta);
 		
-		textField = new JTextField();
-		textField.setBounds(53, 8, 96, 19);
-		textField.setColumns(10);
-		C_BDC_C_Hasta.add(textField);
+		textFieldHasta = new JTextField();
+		textFieldHasta.setBounds(53, 8, 96, 19);
+		textFieldHasta.setColumns(10);
+		C_BDC_C_Hasta.add(textFieldHasta);
 		
 		JLabel lblNewLabel_5_1 = new JLabel("");
 		lblNewLabel_5_1.setBounds(154, 5, 25, 25);
@@ -157,10 +158,10 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		C_BusquedaDeClientes.add(C_BDC_Top);
 		C_BDC_Top.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Busqueda de clientes:");
-		lblNewLabel_1.setBounds(208, 7, 167, 19);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		C_BDC_Top.add(lblNewLabel_1);
+		JLabel lblBusquedaDeClientes = new JLabel("Busqueda de clientes:");
+		lblBusquedaDeClientes.setBounds(208, 7, 167, 19);
+		lblBusquedaDeClientes.setFont(new Font("Tahoma", Font.BOLD, 15));
+		C_BDC_Top.add(lblBusquedaDeClientes);
 		
 		JPanel C_Datos = new JPanel();
 		C_Datos.setBounds(0, 78, 832, 247);
@@ -177,10 +178,10 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		C_DatosPersonales.add(C_DP_Top);
 		C_DP_Top.setLayout(null);
 		
-		JLabel lblNewLabel_2 = new JLabel("Datos personales:");
-		lblNewLabel_2.setBounds(210, 7, 137, 19);
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		C_DP_Top.add(lblNewLabel_2);
+		JLabel lblDatosPersonales = new JLabel("Datos personales:");
+		lblDatosPersonales.setBounds(210, 7, 137, 19);
+		lblDatosPersonales.setFont(new Font("Tahoma", Font.BOLD, 15));
+		C_DP_Top.add(lblDatosPersonales);
 		
 		JPanel C_DP_Center = new JPanel();
 		C_DP_Center.setBounds(0, 33, 832, 66);
@@ -192,15 +193,15 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		C_DP_Center.add(C_DP_C_Nombre);
 		C_DP_C_Nombre.setLayout(null);
 		
-		JLabel lblNewLabel_4 = new JLabel("Nombre: ");
-		lblNewLabel_4.setBounds(227, 7, 64, 19);
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		C_DP_C_Nombre.add(lblNewLabel_4);
+		JLabel lblNombre = new JLabel("Nombre: ");
+		lblNombre.setBounds(227, 7, 64, 19);
+		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		C_DP_C_Nombre.add(lblNombre);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(295, 7, 303, 19);
-		textField_2.setColumns(33);
-		C_DP_C_Nombre.add(textField_2);
+		textFieldNombre = new JTextField();
+		textFieldNombre.setBounds(295, 7, 303, 19);
+		textFieldNombre.setColumns(33);
+		C_DP_C_Nombre.add(textFieldNombre);
 		
 		JPanel C_DP_C_Apellidos = new JPanel();
 		C_DP_C_Apellidos.setBounds(0, 33, 832, 33);
@@ -215,12 +216,12 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		C_D_Top.setBounds(0, 0, 832, 33);
 		C_Direccion.add(C_D_Top);
 		
-		JLabel lblNewLabel_7 = new JLabel("Direccion:");
-		lblNewLabel_7.setBounds(210, 7, 77, 19);
-		lblNewLabel_7.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
+		JLabel lblDireccion = new JLabel("Direccion:");
+		lblDireccion.setBounds(210, 7, 77, 19);
+		lblDireccion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblDatosPersonales.setFont(new Font("Tahoma", Font.BOLD, 15));
 		C_D_Top.setLayout(null);
-		C_D_Top.add(lblNewLabel_7);
+		C_D_Top.add(lblDireccion);
 		
 		JPanel C_D_Center = new JPanel();
 		C_D_Center.setBounds(0, 33, 832, 115);
@@ -232,15 +233,15 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		C_D_Center.add(C_D_C_Numero);
 		C_D_C_Numero.setLayout(null);
 		
-		JLabel lblNewLabel_8 = new JLabel("N\u00FAmero: ");
-		lblNewLabel_8.setBounds(233, 7, 64, 19);
-		C_D_C_Numero.add(lblNewLabel_8);
-		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		JLabel lblNumero = new JLabel("N\u00FAmero: ");
+		lblNumero.setBounds(233, 7, 64, 19);
+		C_D_C_Numero.add(lblNumero);
+		lblNumero.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(301, 7, 299, 19);
-		C_D_C_Numero.add(textField_4);
-		textField_4.setColumns(33);
+		textFieldNumero = new JTextField();
+		textFieldNumero.setBounds(301, 7, 299, 19);
+		C_D_C_Numero.add(textFieldNumero);
+		textFieldNumero.setColumns(33);
 		
 		JPanel C_D_C_More = new JPanel();
 		C_D_C_More.setBounds(0, 33, 832, 82);
@@ -255,55 +256,63 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		C_DP_C_Apellidos.setLayout(null);
 		
-		JLabel lblNewLabel_6 = new JLabel("Apellidos:");
-		lblNewLabel_6.setBounds(227, 7, 64, 19);
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		C_DP_C_Apellidos.add(lblNewLabel_6);
+		JLabel lblApellidos = new JLabel("Apellidos:");
+		lblApellidos.setBounds(227, 7, 64, 19);
+		lblApellidos.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		C_DP_C_Apellidos.add(lblApellidos);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(295, 7, 303, 19);
-		textField_3.setColumns(33);
-		C_DP_C_Apellidos.add(textField_3);
+		textFieldApellidos = new JTextField();
+		textFieldApellidos.setBounds(295, 7, 303, 19);
+		textFieldApellidos.setColumns(33);
+		C_DP_C_Apellidos.add(textFieldApellidos);
 		C_D_C_CodigoPostal.setLayout(null);
 		
-		JLabel lblNewLabel_10 = new JLabel("C\u00F3digo postal:");
-		lblNewLabel_10.setBounds(201, 7, 95, 19);
-		C_D_C_CodigoPostal.add(lblNewLabel_10);
-		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		JLabel lblCodigoPostal = new JLabel("C\u00F3digo postal:");
+		lblCodigoPostal.setBounds(201, 7, 95, 19);
+		C_D_C_CodigoPostal.add(lblCodigoPostal);
+		lblCodigoPostal.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(300, 7, 303, 19);
-		C_D_C_CodigoPostal.add(textField_5);
-		textField_5.setColumns(33);
+		textFieldCodigoPostal = new JTextField();
+		textFieldCodigoPostal.setBounds(300, 7, 303, 19);
+		C_D_C_CodigoPostal.add(textFieldCodigoPostal);
+		textFieldCodigoPostal.setColumns(33);
 		
 		JPanel C_D_C_Pais = new JPanel();
 		C_D_C_Pais.setBounds(0, 33, 832, 49);
 		C_D_C_More.add(C_D_C_Pais);
 		C_D_C_Pais.setLayout(null);
 		
-		JLabel lblNewLabel_11 = new JLabel("Pa\u00EDs: ");
-		lblNewLabel_11.setBounds(262, 7, 36, 19);
-		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		C_D_C_Pais.add(lblNewLabel_11);
+		JLabel lblPais = new JLabel("Pa\u00EDs: ");
+		lblPais.setBounds(262, 7, 36, 19);
+		lblPais.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		C_D_C_Pais.add(lblPais);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(302, 7, 299, 19);
-		C_D_C_Pais.add(textField_6);
-		textField_6.setColumns(33);
+		textFieldPais = new JTextField();
+		textFieldPais.setBounds(302, 7, 299, 19);
+		C_D_C_Pais.add(textFieldPais);
+		textFieldPais.setColumns(33);
 		
 		JPanel Bottom = new JPanel();
 		Bottom.setBounds(5, 434, 832, 41);
 		contentPane.add(Bottom);
 		
-		JButton btnNewButton_1 = new JButton("Filtrar Clientes");
-		btnNewButton_1.setBounds(338, 5, 155, 31);
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnFiltrar = new JButton("Filtrar Clientes");
+		btnFiltrar.setBounds(338, 5, 155, 31);
+		btnFiltrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				String desde = textFieldDesde.getText();
+				String hasta = textFieldHasta.getText();
+				String nombre=textFieldNombre.getText();
+				String apellidos= textFieldApellidos.getText();
+				String numero = textFieldApellidos.getText();
+				String codigoPostal= textFieldCodigoPostal.getText();
+				String pais=textFieldPais.getText();
+				//String output=services.filtrarCliente(desde,hasta,nombre,apellidos,numero,codigoPostal,pais);
+					
 			}
 		});
 		Bottom.setLayout(null);
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		Bottom.add(btnNewButton_1);
+		btnFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		Bottom.add(btnFiltrar);
 	}
 }

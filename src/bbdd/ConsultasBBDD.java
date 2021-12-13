@@ -32,6 +32,9 @@ public class ConsultasBBDD {
 			+ " and cuenta.propietario=(select id_cliente from PersonaRelacionadaCliente where id_personaRelacionada=cliente.id) and cuenta.estadoCuenta = 'activa'"
 			+ " and persona.id = cliente.id and direccion.id = cliente.id_direccion and (select TIMESTAMPDIFF(YEAR, cuenta.fechaApertura, '2021-01-01'))<=5";
 	
+	public String getConexion() {
+		return c.getEstado();
+	}
 	
 	public ResultSet obtenerClientes() {
 		rs = null;
@@ -137,5 +140,4 @@ public class ConsultasBBDD {
 		}
 		return rs;
 	}
-	
 }

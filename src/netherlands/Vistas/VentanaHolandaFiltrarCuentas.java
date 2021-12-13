@@ -16,6 +16,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.ButtonGroup;
 import javax.swing.border.TitledBorder;
+
+import netherlands.Services.HolandaService;
+
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 
@@ -25,6 +28,8 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 	private JTextField textField;
 	private static  VentanaHolandaFiltrarCuentas frame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	
+	private HolandaService services;
 
 	/**
 	 * Launch the application.
@@ -33,7 +38,7 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new VentanaHolandaFiltrarCuentas();
+					frame = new VentanaHolandaFiltrarCuentas(new HolandaService());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +50,8 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaHolandaFiltrarCuentas() {
+	public VentanaHolandaFiltrarCuentas(HolandaService sevices) {
+		this.services=services;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
 		contentPane = new JPanel();
@@ -78,7 +84,7 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new VentanaHolanda().setVisible(true);
+				new VentanaHolanda(services).setVisible(true);
 			}
 		});
 		btnNewButton_1.setBounds(38, 29, 111, 21);

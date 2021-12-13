@@ -24,7 +24,7 @@ public class VentanaHolanda extends JFrame {
 
 	private JPanel contentPane;
 	static VentanaHolanda frame;
-	private HolandaService services=new HolandaService();
+	private HolandaService services;
 	
 
 	/**
@@ -34,7 +34,7 @@ public class VentanaHolanda extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new VentanaHolanda();
+					frame = new VentanaHolanda(new HolandaService());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +46,8 @@ public class VentanaHolanda extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaHolanda() {
+	public VentanaHolanda(HolandaService services) {
+		this.services=services;
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 449);
@@ -60,7 +61,7 @@ public class VentanaHolanda extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new VentanaHolandaFiltrarClientes().setVisible(true);
+				new VentanaHolandaFiltrarClientes(services).setVisible(true);
 			}
 		});
 		btnNewButton.setBounds(82, 307, 146, 21);
@@ -71,7 +72,7 @@ public class VentanaHolanda extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new VentanaHolandaFiltrarCuentas().setVisible(true);
+				new VentanaHolandaFiltrarCuentas(services).setVisible(true);
 			}
 		});
 		btnNewButton_1.setBounds(409, 307, 146, 21);
