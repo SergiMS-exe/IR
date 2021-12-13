@@ -3,16 +3,14 @@ package germany.Vistas;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 
-import germany.Services.Proceso;
+import germany.Services.*;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -27,6 +25,7 @@ public class VentanaAlemania extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton btnReporteInicial;
 	private JButton btnReporteSemanal;
+	private int contadorReporteInicial = 0;
 
 	/**
 	 * Launch the application.
@@ -71,7 +70,6 @@ public class VentanaAlemania extends JFrame implements ActionListener {
 		lbTitulo.setBounds(315, 30, 235, 64);
 		contentPane.add(lbTitulo);
 		
-		
 	}
 
 	@Override
@@ -79,11 +77,18 @@ public class VentanaAlemania extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		Proceso p = new Proceso();
 		if(e.getSource()==btnReporteInicial) {
-			p.rInicial();
+			if(contadorReporteInicial == 0) {
+				p.rInicial();
+				JOptionPane.showMessageDialog(this,"Reporte inicial generado correctamente");
+				contadorReporteInicial++;
+			}else {
+				JOptionPane.showMessageDialog(this,"Error: Ya se ha generado un reporte inicial anteriormente");
+			}
 		}
 		
 		if(e.getSource()==btnReporteSemanal) {
 			p.rSemanal();
+			JOptionPane.showMessageDialog(this,"Reporte semanal generado correctamente");
 		}
 	}
 	

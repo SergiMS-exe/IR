@@ -1,6 +1,5 @@
 package app.Vistas;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,9 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import germany.Services.Proceso;
-import germany.Vistas.VentanaAlemania;
-import netherlands.Vistas.VentanaHolanda;
+import germany.Vistas.*;
+import netherlands.Vistas.*;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -22,6 +20,7 @@ public class Inicio extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton btnAlemania;
 	private JButton btnHolanda;
+	
 
 	/**
 	 * Launch the application.
@@ -69,7 +68,6 @@ public class Inicio extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		Proceso p = new Proceso();
 		if(e.getSource()==btnAlemania) {
 			this.setVisible(false);
 			new VentanaAlemania().setVisible(true);
@@ -77,7 +75,6 @@ public class Inicio extends JFrame implements ActionListener {
 		
 		if(e.getSource()==btnHolanda) {
 			this.setVisible(false);
-			p.rSemanal();
 			new VentanaHolanda().setVisible(true);
 		}
 	}
