@@ -106,9 +106,10 @@ public class HolandaService {
 		List<JSONObject> cuentas = new ArrayList<>();
 		try {
 			while (res.next()) {
+				String productNumber= res.getString("numeroCuenta");
+				if(!productNumber.substring(0, 2).equals("NL")) continue;
 				JSONObject cuenta = new JSONObject();	
-				
-				cuenta.put("productNumber", res.getString("numeroCuenta"));
+				cuenta.put("productNumber", productNumber);
 				cuenta.put("status", res.getString("estadoCuenta"));
 				cuenta.put("startDate", res.getString("fechaApertura"));
 				cuenta.put("endDate", res.getString("fechaCierre"));
