@@ -36,15 +36,21 @@ public class ConsultasBBDD {
 		return c.getEstado();
 	}
 	
-	public ResultSet obtenerClientesIndividualesFiltrados(String desde,String hasta,String nombre, String apellidos, String numero,String codigoPostal,String pais) {
+	public ResultSet obtenerClientesFiltrados(String desde,String hasta,String nombre, String apellidos, String numero,String codigoPostal,String pais) {
 		rs=null;
 		String[] tuplaNombre=nombre.split(" ");
 		String[] tuplaApellido=apellidos.split(" ");
 		String queryDatos="select * "
 				+ "from Cliente c, Persona p, Direccion d "
 				+ "where fechaInicio>='"+desde+"' and fechaInicio<='"+hasta+"' and p.id=c.id and c.id_direccion=d.id "
-						+ "and p.nombre = '"+tuplaNombre[0]+"' and p.segundoNombre = '"+tuplaNombre[1]+"' and p.apellido='"+tuplaApellido[0]+"' and p.segundoApellido = '"+tuplaApellido[1]+"' "
-						+ "and d.numero = '"+numero+"' and d.codigoPostal = '"+codigoPostal+"' and d.pais = '"+pais+"';";
+						+ "and p.nombre = '"+tuplaNombre[0]+"' and p.apellido='"+tuplaApellido[0]+"' "
+						+ "and d.numero = '"+numero+"' and d.codigoPostal = '"+codigoPostal+"' and d.pais = '"+pais+"' ";
+		if(tuplaNombre.length>1) {
+			queryDatos+="and p.segundoNombre = '"+tuplaNombre[1]+"'";
+		}
+		if(tuplaApellido.length>1) {
+			queryDatos+="and p.segundoApellido = '"+tuplaApellido[1]+"'";
+		}
 		try {
 			stm = conexion.createStatement();
 			rs = stm.executeQuery(queryDatos);
@@ -59,7 +65,8 @@ public class ConsultasBBDD {
 		rs=null;
 		String queryCuentas="select * "
 				+ "from Cliente c, Direccion d "
-				+ "where c.id='"+id+" and c.id_direccion=d.id';";
+				+ "where c.id='"+id+"' and c.id_direccion=d.id;";
+		System.out.println(queryCuentas);
 		try {
 			stm = conexion.createStatement();
 			rs = stm.executeQuery(queryCuentas);
@@ -97,7 +104,6 @@ public class ConsultasBBDD {
 		String querypersonasAutorizadas="select * "
 				+ "from PersonaRelacionadaCliente r, Persona p,  Direccion d "
 				+ "where r.id_cliente="+id+" and p.id=r.id_personaRelacionada and p.id=d.id; ";
-		System.out.println(querypersonasAutorizadas);
 		try {
 			stm = conexion.createStatement();
 			rs = stm.executeQuery(querypersonasAutorizadas);

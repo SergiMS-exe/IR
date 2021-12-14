@@ -19,88 +19,82 @@ import bbdd.*;
 public class HolandaService {
 
 	private ConsultasBBDD miBD = new ConsultasBBDD();
+	
+	private static final String ERROR_CONEXION="No se ha podido establecer conexi�n";
+	private static final String ERROR_FILTRO_CLIENTES="No se ha encontrado ninguna cuenta bancaria que coincida con los datos introducidos";
 
 	public String getEstado() {
 		return miBD.getConexion();
 	}
 
-	public JSONArray filtrarCliente(String desde, String hasta, String nombre, String apellidos, String numero,
+	public String filtrarCliente(String desde, String hasta, String nombre, String apellidos, String numero,
 			String codigoPostal, String pais) {
 		if (getEstado() == Conexion.FAILURE_CONNECTION) {
-			return new JSONArray();
+			return ERROR_CONEXION;
 		}
 		desde="2000-12-12";
 		hasta="2200-12-12";
-		nombre="pedro jesus";
-		apellidos="vazquez figueroa";
+		nombre="pedro";
+		apellidos="vazquez";
 		numero="1";
 		codigoPostal="29010";
 		pais="espana";
-		JSONArray individual = new JSONArray();
-		ResultSet rsData = miBD.obtenerClientesIndividualesFiltrados(desde, hasta, nombre, apellidos, numero,
-				codigoPostal, pais);
+		
+		JSONObject clientes= new JSONObject();
+		String output=ERROR_FILTRO_CLIENTES;
+		ResultSet rsData = miBD.obtenerClientesFiltrados(desde, hasta, nombre, apellidos, numero,codigoPostal, pais);
 		try {
 			while (rsData.next()) {
 				JSONObject data = new JSONObject();
-				String id = rsData.getString("id");
-
-				// clients autorized
-
+				
+				String id = rsData.getString("id");				
+				// addresses
+				data.put("addresses", obtenerAddressCliente(miBD.obtenerDireccionesCliente(id)));
+				
+				// personalData
+				data.put("activeCostumer", rsData.getString("estado").equals("Activo"));
+				data.put("dateOfBirth", rsData.getString("fechaNacimiento").toString());
+					//name
+				JSONObject name = new JSONObject();
+				name.put("firstname", rsData.getString("nombre"));
+				name.put("lastName", rsData.getString("segundoNombre"));
+				data.put("name", name);
+				
+				// accounts
+				List<Map<String, String>> accounts=obtenerAccountsCliente(miBD.obtenerCuentasDelCliente(id, "ES"),"Owner");
+				accounts.addAll(obtenerAccountsCliente(miBD.obtenerCuentasAutorizadasCliente(id, "ES"),"Authorized"));
+				
+				data.put("products", accounts);
+				clientes.put("Individual",data);
+				
+				// clients authorized
 				ResultSet rsAutorizedClients = miBD.obtenerPersonasAutorizadasCliente(id);
 				List<JSONObject> autorizedClients = new ArrayList<JSONObject>();
 				while (rsAutorizedClients.next()) {
 					JSONObject autorizedClient = new JSONObject();
-					
-					String dateOfBirthAutorizedClient = rsAutorizedClients.getString("fechaNacimiento").toString();
-					autorizedClient.put("dateOfBirth", dateOfBirthAutorizedClient);
+						//personalData
+					autorizedClient.put("dateOfBirth", rsAutorizedClients.getString("fechaNacimiento").toString());
+							//name
 					Map<String, String> nameAutorizedClient = new LinkedHashMap<String, String>();
-					String firstnameAutorizedClient = rsAutorizedClients.getString("nombre");
-					nameAutorizedClient.put("firstname", firstnameAutorizedClient);
-					String lastNameAutorizedClient = rsAutorizedClients.getString("segundoNombre");
-					nameAutorizedClient.put("lastName", lastNameAutorizedClient);
+					nameAutorizedClient.put("firstname", rsAutorizedClients.getString("nombre"));
+					nameAutorizedClient.put("lastName",rsAutorizedClients.getString("segundoNombre"));
 					autorizedClient.put("name", nameAutorizedClient);
-
+					
+						//addresses
 					autorizedClients.add(autorizedClient);
-
-					ResultSet rsAddressAutorizedClient = miBD.obtenerDireccionesCliente(id);
-					autorizedClient.append("addresses", obtenerAddressCliente(rsAddressAutorizedClient));
+					autorizedClient.put("addresses", obtenerAddressCliente(miBD.obtenerDireccionesCliente(id)));
 				}
-				data.put("Relatedperson", autorizedClients);
+				clientes.put("Relatedperson", autorizedClients);
 				
-				// addresses
-				ResultSet rsAddress = miBD.obtenerDireccionesCliente(id);
-				data.put("addresses", obtenerAddressCliente(rsAddress));
-				
-				// personalData
-
-				Boolean activeCostumer = rsData.getString("estado").equals("Activo");
-				data.put("activeCostumer", activeCostumer);
-				String dateOfBirth = rsData.getString("fechaNacimiento").toString();
-				data.put("dateOfBirth", dateOfBirth);
-
-				JSONObject name = new JSONObject();
-				String firstname = rsData.getString("nombre");
-				name.put("firstname", firstname);
-				String lastName = rsData.getString("segundoNombre");
-				name.put("lastName", lastName);
-				data.put("name", name);
-				
-				// accounts
-				ResultSet rsAccountsOwner = miBD.obtenerCuentasDelCliente(id, "ES");
-				ResultSet rsAccountAutorized = miBD.obtenerCuentasAutorizadasCliente(id, "ES");
-				List accounts=obtenerAccountsCliente(rsAccountsOwner,"Owner");
-				accounts.addAll(obtenerAccountsCliente(rsAccountAutorized,"Autorized"));
-				data.put("products", accounts);
-				individual.put(data);
+				System.out.println(clientes);
 			}
+			output=clientes.toString(2);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return individual;
+		return output;
 	}
 	
 	public String filtrarCuentas(String estado, String iban) {
@@ -162,22 +156,17 @@ public class HolandaService {
 		return propietarios;
 	}
 
-	public List obtenerAddressCliente(ResultSet rsAddress){
+	public List<Map<String, String>> obtenerAddressCliente(ResultSet rsAddress){
 		List<Map<String, String>> addresses = new ArrayList<Map<String, String>>();
 		try {
 			while (rsAddress.next()) {
 				Map<String, String> address = new LinkedHashMap<String, String>();
 				// address
-				String city = rsAddress.getString("ciudad");
-				address.put("city", city);
-				String street = rsAddress.getString("calle");
-				address.put("street", street);
-				String number = rsAddress.getString("numero");
-				address.put("number", number);
-				int postalCode = rsAddress.getInt("codigoPostal");
-				address.put("postalCode", String.valueOf(postalCode));
-				String country = rsAddress.getString("pais");
-				address.put("country", country);
+				address.put("city", rsAddress.getString("ciudad"));
+				address.put("street", rsAddress.getString("calle"));
+				address.put("number", rsAddress.getString("numero"));
+				address.put("postalCode", String.valueOf(rsAddress.getInt("codigoPostal")));
+				address.put("country", rsAddress.getString("pais"));
 				addresses.add(address);
 			}
 		} catch (SQLException e) {
@@ -186,18 +175,17 @@ public class HolandaService {
 		return addresses;
 	}
 	
-	public List obtenerAccountsCliente(ResultSet rsAccounts,String type) {
+	public List<Map<String, String>> obtenerAccountsCliente(ResultSet rsAccounts,String type) {
 		List<Map<String, String>> accounts = new ArrayList<Map<String, String>>();
 		try {
 			while (rsAccounts.next()) {
+				String productNumber= rsAccounts.getString("numeroCuenta");
+				if(!productNumber.substring(0, 2).equals("NL")) continue;
 				Map<String, String> account = new LinkedHashMap<String, String>();
 				// FALTA TYPE
-				String productNumber = rsAccounts.getString("numeroCuenta");
 				account.put("productNumber", productNumber);
-				String status = rsAccounts.getString("estadoCuenta");
-				account.put("status", status);
-				String relationShip = type;
-				account.put("relationShip", relationShip);
+				account.put("status", rsAccounts.getString("estadoCuenta"));
+				account.put("relationShip", type);
 				accounts.add(account);
 			}
 		} catch (SQLException e) {
