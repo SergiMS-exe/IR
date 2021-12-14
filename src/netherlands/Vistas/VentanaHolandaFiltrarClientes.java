@@ -1,4 +1,5 @@
 package netherlands.Vistas;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -9,6 +10,8 @@ import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -43,11 +46,12 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 	private JTextField textFieldCodigoPostal;
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellidos;
+	private JButton btnFiltrar;
 
 	private static VentanaHolandaFiltrarClientes frame;
-	
+
 	private HolandaService services;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -133,6 +137,24 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		textFieldDesde.setBounds(57, 8, 96, 19);
 		C_BDC_C_Desde.add(textFieldDesde);
 		textFieldDesde.setColumns(10);
+		textFieldDesde.addKeyListener( new KeyListener(){
+            @Override
+			public void keyTyped(KeyEvent e) {
+				checkInputs();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		JLabel lblNewLabel_5 = new JLabel("");
 		lblNewLabel_5.setBounds(158, 5, 25, 25);
@@ -153,6 +175,24 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		textFieldHasta.setBounds(53, 8, 96, 19);
 		textFieldHasta.setColumns(10);
 		C_BDC_C_Hasta.add(textFieldHasta);
+		textFieldHasta.addKeyListener( new KeyListener(){
+            @Override
+			public void keyTyped(KeyEvent e) {
+				checkInputs();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		JLabel lblNewLabel_5_1 = new JLabel("");
 		lblNewLabel_5_1.setBounds(154, 5, 25, 25);
@@ -207,6 +247,24 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		textFieldNombre = new JTextField();
 		textFieldNombre.setBounds(295, 7, 303, 19);
 		textFieldNombre.setColumns(33);
+		textFieldNombre.addKeyListener( new KeyListener(){
+            @Override
+			public void keyTyped(KeyEvent e) {
+				checkInputs();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		C_DP_C_Nombre.add(textFieldNombre);
 		
 		JPanel C_DP_C_Apellidos = new JPanel();
@@ -248,6 +306,24 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		textFieldNumero.setBounds(301, 7, 299, 19);
 		C_D_C_Numero.add(textFieldNumero);
 		textFieldNumero.setColumns(33);
+		textFieldNumero.addKeyListener( new KeyListener(){
+            @Override
+			public void keyTyped(KeyEvent e) {
+				checkInputs();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		JPanel C_D_C_More = new JPanel();
 		C_D_C_More.setBounds(0, 33, 832, 82);
@@ -270,6 +346,24 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		textFieldApellidos = new JTextField();
 		textFieldApellidos.setBounds(295, 7, 303, 19);
 		textFieldApellidos.setColumns(33);
+		textFieldApellidos.addKeyListener( new KeyListener(){
+            @Override
+			public void keyTyped(KeyEvent e) {
+				checkInputs();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		C_DP_C_Apellidos.add(textFieldApellidos);
 		C_D_C_CodigoPostal.setLayout(null);
 		
@@ -282,6 +376,24 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		textFieldCodigoPostal.setBounds(300, 7, 303, 19);
 		C_D_C_CodigoPostal.add(textFieldCodigoPostal);
 		textFieldCodigoPostal.setColumns(33);
+		textFieldCodigoPostal.addKeyListener( new KeyListener(){
+            @Override
+			public void keyTyped(KeyEvent e) {
+				checkInputs();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		JPanel C_D_C_Pais = new JPanel();
 		C_D_C_Pais.setBounds(0, 33, 832, 49);
@@ -297,13 +409,32 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		textFieldPais.setBounds(302, 7, 299, 19);
 		C_D_C_Pais.add(textFieldPais);
 		textFieldPais.setColumns(33);
+		textFieldPais.addKeyListener( new KeyListener(){
+            @Override
+			public void keyTyped(KeyEvent e) {
+				checkInputs();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		JPanel Bottom = new JPanel();
 		Bottom.setBounds(5, 434, 832, 41);
 		contentPane.add(Bottom);
 		
-		JButton btnFiltrar = new JButton("Filtrar Clientes");
+		btnFiltrar = new JButton("Filtrar Clientes");
 		btnFiltrar.setBounds(338, 5, 155, 31);
+		btnFiltrar.setEnabled(false);
 		btnFiltrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String desde = textFieldDesde.getText();
@@ -327,5 +458,20 @@ public class VentanaHolandaFiltrarClientes extends JFrame {
 		Bottom.setLayout(null);
 		btnFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		Bottom.add(btnFiltrar);
+	}
+	private void checkInputs() {
+		String desde = textFieldDesde.getText();
+		String hasta = textFieldHasta.getText();
+		String nombre=textFieldNombre.getText();
+		String apellidos= textFieldApellidos.getText();
+		String numero = textFieldNumero.getText();
+		String codigoPostal= textFieldCodigoPostal.getText();
+		String pais=textFieldPais.getText();
+		if(desde.equals("")||hasta.equals("")||nombre.equals("")||apellidos.equals("")||numero.equals("")||codigoPostal.equals("")||pais.equals("")) {
+			btnFiltrar.setEnabled(false);
+		}
+		else
+			btnFiltrar.setEnabled(true);
+		
 	}
 }
