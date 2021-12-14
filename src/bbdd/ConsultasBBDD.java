@@ -161,15 +161,28 @@ public class ConsultasBBDD {
 		rs=null;
 		try {
 			stm = conexion.createStatement();
-			System.out.println(IBAN+" "+estado);
-			if (!IBAN.equals("") && !estado.equals(""))
-				rs=stm.executeQuery("SELECT * FROM CuentaEbury cuenta WHERE cuenta.numeroCuenta='"+IBAN+"' AND cuenta.estadoCuenta='"+estado+"';");
-			else if (IBAN.equals("") && !estado.equals(""))
-				rs=stm.executeQuery("SELECT * FROM CuentaEbury cuenta WHERE cuenta.estadoCuenta='"+estado+"';");
+			if (IBAN.equals("") && !estado.equals(""))
+				rs=stm.executeQuery("SELECT cuenta.numeroCuenta, cuenta.estadoCuenta, cuenta.fechaApertura, cuenta.fechaCierre, cuenta.propietario FROM CuentaEbury cuenta WHERE cuenta.estadoCuenta='"+estado+"';");
 			else if (!IBAN.equals("") && estado.equals(""))
-				rs=stm.executeQuery("SELECT * FROM CuentaEbury cuenta WHERE cuenta.numeroCuenta='"+IBAN+"';");
+				rs=stm.executeQuery("SELECT cuenta.numeroCuenta, cuenta.estadoCuenta, cuenta.fechaApertura, cuenta.fechaCierre, cuenta.propietario FROM CuentaEbury cuenta WHERE cuenta.numeroCuenta='"+IBAN+"';");
 			else 
-				rs=stm.executeQuery("SELECT * FROM CuentaEbury");
+				rs=stm.executeQuery("SELECT cuenta.numeroCuenta, cuenta.estadoCuenta, cuenta.fechaApertura, cuenta.fechaCierre, cuenta.propietario FROM CuentaEbury cuenta;");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+
+	public ResultSet getPropietario(String idProp) {
+		rs = null;
+		try {
+			stm = conexion.createStatement();
+			if (stm.executeQuery("Select * from Persona where id='"+idProp+"';").getFetchSize()==0) {
+				rs = stm.executeQuery("Select DISTINCT cliente.estado, empresa.nombre from Cliente cliente, Empresa empresa where cliente.id="+idProp+" and empresa.id="+idProp+";");
+			}
+			else {
+				rs = stm.executeQuery("Select DISTINCT cliente.estado, persona.nombre, persona.segundoNombre, persona.apellido, persona.segundoApellido from Cliente cliente, Persona persona where cliente.id="+idProp+" and persona.id="+idProp+";");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

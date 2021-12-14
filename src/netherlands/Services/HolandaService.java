@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -107,25 +108,22 @@ public class HolandaService {
 			return "error";
 		}
 		ResultSet res = miBD.filtrarCuentas(estado, iban);
-		List<HashMap<String, String>> cuentas = new ArrayList<HashMap<String, String>>();
+		JSONObject result = new JSONObject();
+		List<JSONObject> cuentas = new ArrayList<>();
 		try {
 			while (res.next()) {
-				String[] keys= {"id", "numeroCuenta", "estadoCuenta", "fechaApertura", "fechaCierre", "entidadEbury", "propietario"};
-				HashMap<String, String> cuenta = new HashMap<String, String>();
-				for (int i=1; i<=keys.length; i++) {
-					cuenta.put(keys[i-1], res.getString(i));
-				}
+				JSONObject cuenta = new JSONObject();	
+				
+				cuenta.put("productNumber", res.getString("numeroCuenta"));
+				cuenta.put("status", res.getString("estadoCuenta"));
+				cuenta.put("startDate", res.getString("fechaApertura"));
+				cuenta.put("endDate", res.getString("fechaCierre"));
+				cuenta.put("accountHolder", getPropietario(res.getString("propietario")));
+				
 				cuentas.add(cuenta);
 			}
+			result.put("products", cuentas);
 			
-			List<JSONObject> jsonObj = new ArrayList<JSONObject>();
-
-			for(HashMap<String, String> data : cuentas) {
-			    JSONObject obj = new JSONObject(data);
-			    jsonObj.add(obj);
-			}
-
-			JSONArray result = new JSONArray(jsonObj);
 			return result.toString(2);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,6 +131,37 @@ public class HolandaService {
 		return "error";
 	}
 	
+	private List getPropietario(String idProp) {
+		ResultSet res = miBD.getPropietario(idProp);
+		List<JSONObject> propietarios = new ArrayList<JSONObject>();
+		try {
+			while (res.next()) {
+				JSONObject propietario = new JSONObject();
+				propietario.put("accountStatus", res.getString("cliente.estado"));
+				
+				//Nombre
+				JSONObject nombre = new JSONObject();
+				try {
+					nombre.put("firstName", res.getString("persona.nombre"));
+					nombre.put("secondName", res.getString("persona.segundNombre"));
+					nombre.put("surname", res.getString("persona.apellido")+" "+res.getString("persona.segundoApellido"));
+				} catch (Exception e) {
+					nombre.put("name", res.getString("empresa.nombre"));
+				}
+				nombre.put("name", nombre);
+				
+				// addresses
+				ResultSet rsAddress = miBD.obtenerDireccionesCliente(idProp);
+				propietario.put("addresses", obtenerAddressCliente(rsAddress));
+				
+				propietarios.add(propietario);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return propietarios;
+	}
+
 	public List obtenerAddressCliente(ResultSet rsAddress){
 		List<Map<String, String>> addresses = new ArrayList<Map<String, String>>();
 		try {

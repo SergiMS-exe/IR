@@ -126,8 +126,11 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 					estado="activa";
 				else if (rbInactiva.isSelected())
 					estado="inactiva";
+				if ((rbActiva.isSelected() || rbInactiva.isSelected()) && !textField.getText().equals(""))
+					JOptionPane.showMessageDialog(frame,"Se debe de filtrar por estado de la cuenta o IBAN, pero no ambas");
 				String cuentas = holandaService.filtrarCuentas(estado, textField.getText());
 				setVisible(false);
+				System.out.println(cuentas);
 				new VentanaHolandaResultado(services,cuentas).setVisible(true);
 			}
 		});
