@@ -32,13 +32,6 @@ public class HolandaService {
 		if (getEstado() == Conexion.FAILURE_CONNECTION) {
 			return ERROR_CONEXION;
 		}
-		desde="2000-12-12";
-		hasta="2200-12-12";
-		nombre="pedro";
-		apellidos="vazquez";
-		numero="1";
-		codigoPostal="29010";
-		pais="espana";
 		
 		JSONObject clientes= new JSONObject();
 		String output=ERROR_FILTRO_CLIENTES;

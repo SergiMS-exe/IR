@@ -11,21 +11,21 @@ public class ConsultasBBDD {
 	private Connection conexion = c.conectar();
 	private Statement stm = null;
 	private ResultSet rs = null; 
-	private String inicialPersonaIndividual = "select persona.apellido, persona.nombre, cuenta.numeroCuenta, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento"
+	private String inicialPersonaIndividual = "select cuenta.numeroCuenta, persona.apellido, persona.nombre, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento"
 			+ " from Cliente cliente, CuentaEbury cuenta, Direccion direccion, Persona persona"
 			+ " where cliente.id in (select propietario from CuentaEbury) and cuenta.propietario=cliente.id"
 			+ " and direccion.id = cliente.id_direccion and persona.id = cliente.id and (select TIMESTAMPDIFF(YEAR, cuenta.fechaApertura, '2021-01-01'))<=5";
-	private String inicialPersonaRelacionadaEmpresa = "select persona.apellido, persona.nombre, cuenta.numeroCuenta, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento"
+	private String inicialPersonaRelacionadaEmpresa = " select cuenta.numeroCuenta, persona.apellido, persona.nombre, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento"
 			+ " from Cliente cliente, CuentaEbury cuenta, Direccion direccion, Persona persona\n"
 			+ " where cliente.id in( select persona.id_personaRelacionada from Cliente cliente, PersonaRelacionadaCliente persona"
 			+ " where cliente.id in(select propietario from CuentaEbury) and persona.id_cliente=cliente.id)"
 			+ " and cuenta.propietario=(select id_cliente from PersonaRelacionadaCliente where id_personaRelacionada=cliente.id)"
 			+ " and persona.id = cliente.id and direccion.id = cliente.id_direccion and (select TIMESTAMPDIFF(YEAR, cuenta.fechaApertura, '2021-01-01'))<=5 ";
-	private String semanalPersonaIndividual = "select persona.apellido, persona.nombre, cuenta.numeroCuenta, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento \n"
+	private String semanalPersonaIndividual = "select cuenta.numeroCuenta, persona.apellido, persona.nombre, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento \n"
 			+ " from Cliente cliente, CuentaEbury cuenta, Direccion direccion, Persona persona"
 			+ " where cliente.id in (select propietario from CuentaEbury where estadoCuenta = 'activa') and cliente.estado = 'Activo' and cuenta.propietario=cliente.id"
 			+ " and direccion.id = cliente.id_direccion and persona.id = cliente.id and (select TIMESTAMPDIFF(YEAR, cuenta.fechaApertura, '2021-01-01'))<=5";
-	private String semanalPersonaRelacionadaEmpresa = "select persona.apellido, persona.nombre, cuenta.numeroCuenta, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento"
+	private String semanalPersonaRelacionadaEmpresa = "select cuenta.numeroCuenta, persona.apellido, persona.nombre, direccion.calle, direccion.ciudad, direccion.codigoPostal, direccion.pais, cliente.numeroIdentificacion, persona.fechaNacimiento"
 			+ " from Cliente cliente, CuentaEbury cuenta, Direccion direccion, Persona persona"
 			+ " where cliente.id in( select persona.id_personaRelacionada from Cliente cliente, PersonaRelacionadaCliente persona"
 			+ " where cliente.id in(select propietario from CuentaEbury where estadoCuenta='activa') and persona.id_cliente=cliente.id and cliente.estado='Activo')"

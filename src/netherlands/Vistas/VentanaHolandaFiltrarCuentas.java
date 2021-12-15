@@ -101,7 +101,7 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 		rbActiva.setBounds(157, 182, 103, 21);
 		contentPane.add(rbActiva);
 		
-		JRadioButton rbInactiva = new JRadioButton("Inactiva");
+		JRadioButton rbInactiva = new JRadioButton("Cerrada");
 		rbInactiva.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		buttonGroup.add(rbInactiva);
 		rbInactiva.setBounds(157, 230, 103, 21);
@@ -125,7 +125,7 @@ public class VentanaHolandaFiltrarCuentas extends JFrame {
 				if (rbActiva.isSelected())
 					estado="activa";
 				else if (rbInactiva.isSelected())
-					estado="inactiva";
+					estado="cerrada";
 				if ((rbActiva.isSelected() || rbInactiva.isSelected()) && !textField.getText().equals(""))
 					JOptionPane.showMessageDialog(frame,"Se debe de filtrar por estado de la cuenta o IBAN, pero no ambas");
 				String cuentas = holandaService.filtrarCuentas(estado, textField.getText());

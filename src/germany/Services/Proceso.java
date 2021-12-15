@@ -36,6 +36,7 @@ public class Proceso {
 		;
 		try {
 			while (rs.next()) {
+				if(!rs.getString(1).substring(0, 2).equals("DE")) continue;
 				String apellido = rs.getString(1);
 				String nombre = rs.getString(2);
 				String numeroCuenta = rs.getString(3);
